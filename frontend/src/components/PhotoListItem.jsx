@@ -3,9 +3,15 @@ import React from 'react';
 
 import '../styles/PhotoListItem.scss';
 
-const PhotoListItem = () => {
-  /* Insert React */
-}
+const PhotoListItem = ({ username, imageSource, id, hideUserName }) => {
+  return (
+    <div>
+      <img src={imageSource} alt="Photograph" />
+      {!hideUserName && <p>{username}</p>}
+      <p>{id}</p>
+    </div>
+  );
+};
 
 PhotoListItem.defaultProps = {
   username: 'Jacob',
