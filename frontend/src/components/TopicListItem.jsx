@@ -2,15 +2,18 @@ import React from 'react';
 
 import '../styles/TopicListItem'
 
-const TopicListItem = () => {
-  <div className="topic-list--item">
-    {/* Insert React */}
-  </div>
-}
+const TopicListItem = (props) => {
+  const handleLoadTopic = useCallback(() => {
+    props.onLoadTopic(props.id);
+  }, [props.onLoadTopic, props.id]);
 
-TopicListItem.defaultProps = {
-  id: 1,
-  label: 'Nature',
-  link: 'link placeholder' 
-}
+  return (
+    <div className="topic-list--item" onClick={handleLoadTopic}>
+      <span>
+        {props.title}
+      </span>
+    </div>
+  );
+};
+
 export default TopicListItem
