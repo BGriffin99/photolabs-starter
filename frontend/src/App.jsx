@@ -3,6 +3,7 @@ import useApplicationData from './hooks/useApplicationData';
 import './App.scss';
 import HomeRoute from './routes/HomeRoute';
 import PhotoDetailsModal from './routes/PhotoDetailsModal';
+import axios from "axios"
 
 const App = () => {
   // Extract state and functions from useApplicationData hook
@@ -22,10 +23,12 @@ const App = () => {
   // Fetch photo and topic data from the API
   useEffect(() => {
     const fetchData = async () => {
-      const photosResponse = await fetch('/api/photos').then((response) => response.json());
-      const topicsResponse = await fetch('/api/topics').then((response) => response.json());
-      setPhotos(photosResponse);
-      setTopics(topicsResponse);
+      const photosResponse = await axios.get('/api/photos')
+      const topicsResponse = await axios.get('/api/topics')
+      //const photosResponse = await fetch('/api/photos').then((response) => response.json());
+      //const topicsResponse = await fetch('/api/topics').then((response) => response.json());
+     setPhotos(photosResponse.data);
+     setTopics(topicsResponse.data);
     };
     fetchData();
   }, []);

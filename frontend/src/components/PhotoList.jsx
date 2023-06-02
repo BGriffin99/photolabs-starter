@@ -4,14 +4,14 @@ import '../styles/PhotoList.scss';
 
 import PhotoListItem from './PhotoListItem';
 
-const PhotoList = () => {
+const PhotoList = ({photos}) => {
   return (
     <ul className="photo-list">
       {photos.map(photo => (
         <PhotoListItem
           key={photo.id}
-          username={photo.username}
-          imageSource={photo.imageSource}
+          username={photo.user.name}
+          imageSource={photo.urls.regular}
           id={photo.id}
           hideUserName={photo.hideUserName}
         />

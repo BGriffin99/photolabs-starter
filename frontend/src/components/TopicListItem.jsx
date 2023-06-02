@@ -1,6 +1,6 @@
-import React from 'react';
+import React,{useCallback} from 'react';
 
-import '../styles/TopicListItem'
+import '../styles/TopicListItem.scss'
 
 const TopicListItem = (props) => {
   const handleLoadTopic = useCallback(() => {

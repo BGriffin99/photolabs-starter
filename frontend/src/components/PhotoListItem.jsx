@@ -5,8 +5,8 @@ import '../styles/PhotoListItem.scss';
 
 const PhotoListItem = ({ username, imageSource, id, hideUserName }) => {
   return (
-    <div>
-      <img src={imageSource} alt="Photograph" />
+    <div className = 'photo-list--item'>
+      <img className = 'photo-list--image' src={imageSource} alt="Photograph" />
       {!hideUserName && <p>{username}</p>}
       <p>{id}</p>
     </div>

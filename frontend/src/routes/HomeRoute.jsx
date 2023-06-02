@@ -18,7 +18,7 @@ const HomeRoute = ({ topicData, likedPhotoArray, onLoadTopic, photoData, onClick
   const renderPhotoList = () => {
     return (
       <PhotoList
-        photoData={photoData}
+        photos={photoData}
         onClickLikes={onClickLikes}
         onClickModal={onClickModal}
         likedPhotoArray={likedPhotoArray}
