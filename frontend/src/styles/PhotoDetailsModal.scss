@@ -1,42 +1,29 @@
 .photo-details-modal {
-  background-color: white;
-  box-shadow: 0 0 0 50vmax rgba(9, 9, 9, 0.5);
-
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: beige;
+  box-shadow: 0 0 0 50vmax rgba(0,0,0,.5);
   position: absolute;
-  top: 55%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -40%);
-  height: 80%;
-  width: 80%;
-  overflow-y: scroll;
-  border-radius: 12px;
-}
-
-.photo-details-modal-fullscreen {
-  background-color: white;
-  box-shadow: 0 0 0 50vmax rgba(0, 0, 0, 0.5);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 100vh;
-  width: 100vw;
+  height: 95%;
+  width: 85%;
   overflow-y: scroll;
   border-radius: 12px;
 }
 
 .photo-details-modal--close-button {
-  background-color: white;
+  background-color: beige;
   border: none;
-  color: white;
+  color: black;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
   cursor: pointer;
-  margin-left: 16px;
-  margin-top: 16px;
+  margin: 10px;
 }
 
 .photo-details-modal--images {
@@ -47,6 +34,7 @@
 .photo-details-modal--image {
   max-width: 95%;
   border-radius: 8px;
+  align-self: center;
 }
 
 .photo-details-modal--top-bar {
@@ -70,9 +58,4 @@
   margin-top: 24px;
   margin-bottom: 24px;
   width: 90%;
-}
-
-.photo-details-modal-line {
-  margin-right: 25px;
-  color: lightgray;
 }

@@ -1,23 +1,23 @@
-
 import React from 'react';
-
+import PhotoFavButton from './PhotoFavButton';
 import '../styles/PhotoListItem.scss';
 
-const PhotoListItem = ({ username, imageSource, id, hideUserName }) => {
+const PhotoListItem = (props) => {
+  // Destructure the props
+  const { id, username, imageSource, hideUserName, likedPhotos, dispatch } = props;
+
   return (
-    <div className = 'photo-list--item'>
-      <img className = 'photo-list--image' src={imageSource} alt="Photograph" />
-      {!hideUserName && <p>{username}</p>}
-      <p>{id}</p>
-    </div>
+    <li className='photo-list--item' onClick={() => dispatch({type: "SHOW_MODAL", payload: {id}})}>
+      {/* Render the PhotoFavButton component */}
+      <PhotoFavButton id={id} likedPhotos={likedPhotos} dispatch={dispatch} />
+
+      {/* Display the photo image */}
+      <img src={imageSource} className='photo-list--image' alt='Photo' />
+
+      {/* Display the username if hideUserName is false */}
+      {!hideUserName && <p className='photo-list--user-profile'>{username}</p>}
+    </li>
   );
 };
 
-PhotoListItem.defaultProps = {
-  username: 'Jacob',
-  imageSource: `${process.env.PUBLIC_URL}/Image.jpg`,
-  id: 1,
-  hideUserName: false,
-}
-
-export default PhotoListItem
+export default PhotoListItem;

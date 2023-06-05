@@ -1,23 +1,103 @@
-import { useState } from "react";
-import photos from '../mocks/photos';
-import topics from '../mocks/topics';
+import React, { useState, useEffect, useReducer } from "react";
 
 const useApplicationData = () => {
-  const [displayPhoto, setDisplayPhoto] = useState(false);
-  const [bigPhoto, setBigPhoto] = useState(null);
-  const [likes, setLikes] = useState(0);
 
-  const photosList = Object.values(photos);
-  const topicsList = Object.values(topics);
 
-  const updateLikes = (photoId, increment) => {
-    setLikes((prevLikes) => {
-      const updatedLikes = increment ? prevLikes + 1 : prevLikes - 1;
-      return updatedLikes >= 0 ? updatedLikes : 0;
-    });
+  const initialState = {
+    photos: [],
+    topics: [],
+    likedPhotos: {},
+    modalShown: false,
+    photoData: undefined,
+    filteredPhotos: [],
+    filterID: "",
   };
 
-  return { photosList, topicsList, displayPhoto, setDisplayPhoto, bigPhoto, setBigPhoto, likes, updateLikes };
+  const labsReducer = (state, action) => {
+    switch (action.type) {
+      case "LOAD_PHOTOS_AND_TOPICS":
+        const loadState = { ...state };
+        loadState.photos = action.payload.photos;
+        loadState.topics = action.payload.topics;
+        return loadState;
+
+      case "FILTER_ID":
+        const filterState = { ...state };
+        filterState.filterID = action.payload;
+        return filterState;
+
+      case "LOAD_FILTERED_PHOTOS":
+        const loadFilteredPhotos = { ...state };
+        loadFilteredPhotos.filteredPhotos = action.payload;
+        return loadFilteredPhotos;
+
+      case "SHOW_MODAL":
+        const showModal = { ...state };
+        const photo = showModal.photos.find(
+          photo => photo.id === action.payload.id
+        );
+        showModal.modalShown = true;
+        showModal.photoData = photo;
+        return showModal;
+
+      case "CLOSE_MODAL":
+        const closeModal = { ...state };
+        closeModal.modalShown = false;
+        closeModal.photoData = undefined;
+        return closeModal;
+
+      case "LIKE_PHOTO":
+        const likePhoto = { ...state };        
+        likePhoto.likedPhotos[action.payload.id] = action.payload.status;
+        return likePhoto;
+    }
+  };
+
+  const [state, dispatch] = useReducer(labsReducer, initialState);
+
+  // fetches photos and topics from the database, only runs once after first load
+  useEffect(() => {
+    let loadState = {};
+    fetch("/api/photos", {
+      method: "GET",
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        loadState.photos = json;
+      })
+      .then(() => {
+        return fetch("/api/topics", {
+          method: "GET",
+        });
+      })
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        loadState.topics = json;
+        dispatch({ type: "LOAD_PHOTOS_AND_TOPICS", payload: loadState });
+      })
+
+      .catch(e => console.log(e));
+  }, []);
+
+  // fetches photos of a certain category from the database
+  useEffect(() => {
+    if (state.filterID) {
+      fetch(`/api/topics/photos/${state.filterID}`)
+        .then(response => {
+          return response.json();
+        })
+        .then(json => {
+          dispatch({ type: "LOAD_FILTERED_PHOTOS", payload: json });
+        })
+        .catch(e => console.log(e));
+    }
+  }, [state.filterID]);
+
+  return { state, dispatch };
 };
 
 export default useApplicationData;

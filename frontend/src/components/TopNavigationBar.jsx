@@ -1,19 +1,15 @@
 import React from 'react';
-
-import FavBadge from './FavBadge';
 import TopicList from './TopicList';
+
 import '../styles/TopNavigationBar.scss';
 
-const TopNavigation = ({ topicData, onLoadTopic, likedPhotoArray }) => {
-  const renderLogo = () => {
-    return <h1 className="top-nav-bar--logo">PhotoLabs</h1>;
-  };
+const TopNavigation = (props) => {
+  const { topics, likedPhotos, dispatch } = props;
 
   return (
     <div className="top-nav-bar">
-      {renderLogo()}
-      <TopicList topicData={topicData} onLoadTopic={onLoadTopic} />
-      <FavBadge likedPhotoArray={likedPhotoArray} />
+      <span className="top-nav-bar--logo">PhotoLabs</span>
+      <TopicList topics={topics} likedPhotos={likedPhotos} dispatch={dispatch} />
     </div>
   );
 };

@@ -182,7 +182,7 @@ const photo10 = {
 
 
 
-const photos = [
+const mockPhotos = [
   {
     ...photo1,
     similar_photos: {
@@ -275,4 +275,4 @@ const photos = [
   }
 ]
 
-export default photos;
+export default mockPhotos;

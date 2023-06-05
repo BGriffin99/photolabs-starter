@@ -1,26 +1,25 @@
-import React, { useCallback, useState } from "react";
+import React from 'react';
+import { FavIcon } from './FavIcon';
+import '../styles/PhotoFavButton.scss';
 
-import { FavIcon } from "./FavIcon";
-import "../styles/PhotoFavButton.scss";
+function PhotoFavButton(props) {
+  // Destructure the props
+  const { id, likedPhotos, dispatch } = props;
 
-function PhotoFavButton() {
-  const [isFavorited, setIsFavorited] = useState(false);
-
-  const handleIconClick = () => {
-    setIsFavorited(!isFavorited);
+  // Function to toggle the like status and update likedPhotos state
+  const toggleLike = (event) => {
+    event.stopPropagation();
+    dispatch({ type: "LIKE_PHOTO", payload: { id, status: likedPhotos[id] ? null : true } });
   };
 
   return (
-    <div className="photo-list--fav-icon" onClick={handleIconClick}>
-      <div
-        className={`photo-list--fav-icon-svg ${
-          isFavorited ? "highlighted" : ""
-        }`}
-      >
-        <FavIcon className={isFavorited ? "highlighted" : ""} />
+    <div onClick={toggleLike} className="photo-list--fav-icon">
+      <div className="photo-list--fav-icon-svg">
+        {/* Render the FavIcon component with fill based on like status */}
+        <FavIcon fill={likedPhotos[id] ? "#C80000" : "#EEEEEE"} />
       </div>
     </div>
   );
-}
+};
 
 export default PhotoFavButton;
